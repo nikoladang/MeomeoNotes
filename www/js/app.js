@@ -1,6 +1,30 @@
 
 var app = angular.module('starter', ['ionic']);
 
+app.config(function($stateProvider, $urlRouterProvider) {
+
+  $stateProvider.state('list', {
+    url: '/list',
+    templateUrl: 'templates/list.html'
+  });
+
+  $stateProvider.state('add', {
+    url: '/add',
+    templateUrl: 'templates/edit.html',
+    controller: "AddCtrl"
+  });
+
+  $stateProvider.state('edit', {
+    url: '/edit/:noteId',
+    templateUrl: 'templates/edit.html',
+    controller: 'EditCtrl'
+  });
+
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/list');
+
+});
+
 var notes = [
     {
       id: '1',
@@ -68,30 +92,6 @@ app.controller('EditCtrl', function($scope, $state) {
     updateNote($scope.note);
     $state.go('list');
   }
-
-});
-
-app.config(function($stateProvider, $urlRouterProvider) {
-
-  $stateProvider.state('list', {
-    url: '/list',
-    templateUrl: 'templates/list.html'
-  });
-
-  $stateProvider.state('add', {
-    url: '/add',
-    templateUrl: 'templates/edit.html',
-    controller: "AddCtrl"
-  });
-
-  $stateProvider.state('edit', {
-    url: '/edit/:noteId',
-    templateUrl: 'templates/edit.html',
-    controller: 'EditCtrl'
-  });
-
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/list');
 
 });
 
