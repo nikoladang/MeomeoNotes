@@ -24,6 +24,15 @@ function getNote(noteID){
   return undefined;
 }
 
+function updateNote(note){
+  for ( var i = 0; i < notes.length; i++){
+    if (notes[i].id === note.id){
+      notes[i] = note;
+      return;
+    }
+  }
+}
+
 app.controller('ListCtrl', function($scope) {
 
   $scope.notes = notes;
@@ -32,10 +41,14 @@ app.controller('ListCtrl', function($scope) {
 
 app.controller('EditCtrl', function($scope, $state) {
 
-  console.log("Inside editCtrl");
-  console.log($state.params.noteId);
   //$scope.gotId = $state.params.noteId;
-  $scope.note = getNote($state.params.noteId);
+  $scope.note = angular.copy(getNote($state.params.noteId));
+
+
+  $scope.save = function(){
+    updateNote($scope.note);
+    $state.go('list');
+  }
 
 });
 
