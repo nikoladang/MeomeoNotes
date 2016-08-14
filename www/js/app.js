@@ -1,5 +1,5 @@
 
-var app = angular.module('starter', ['ionic']);
+var app = angular.module('meomeonotes', ['ionic']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
@@ -25,71 +25,72 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 });
 
-var notes = [
-    {
-      id: '1',
-      title: "First note",
-      description: "This is my first note description"
+app.factory('NoteStore', function(){
+
+  var notes = [];
+
+  return {
+
+    list: function() {
+      return notes;
     },
-    {
-      id: '2',
-      title: "Second note",
-      description: "This is my second note description"
+
+    get: function(noteID){
+      for ( var i = 0; i < notes.length; i++){
+        if (notes[i].id === noteID){
+          console.log(notes[i].title);
+          return notes[i];
+        }
+      }
+      return undefined;
+    },
+
+    create: function(note){
+      notes.push(note);
+    },
+
+    update: function(note){
+      for ( var i = 0; i < notes.length; i++){
+        if (notes[i].id === note.id){
+          notes[i] = note;
+          return;
+        }
+      }
     }
-  ];
 
-function getNote(noteID){
-  for ( var i = 0; i < notes.length; i++){
-    if (notes[i].id === noteID){
-      console.log(notes[i].title);
-      return notes[i];
-    }
-  }
-  return undefined;
-}
-
-function updateNote(note){
-  for ( var i = 0; i < notes.length; i++){
-    if (notes[i].id === note.id){
-      notes[i] = note;
-      return;
-    }
-  }
-}
-
-function addNote(note){
-  notes.push(note);
-}
-
-app.controller('ListCtrl', function($scope) {
-
-  $scope.notes = notes;
+  };
 
 });
 
-app.controller('AddCtrl', function($scope, $state) {
+app.controller('ListCtrl', function($scope, NoteStore) {
+
+  //$scope.notes = notes;
+  $scope.notes = NoteStore.list();
+
+});
+
+app.controller('AddCtrl', function($scope, $state, NoteStore) {
 
   $scope.note = {
     id: new Date().getTime().toString(),
-    title: '',
-    description: ''
+    title: '1',
+    description: '2'
   };
 
-
   $scope.save = function(){
-    addNote($scope.note);
+    //createNote($scope.note);
+    NoteStore.create($scope.note);
     $state.go('list');
   }
 
 });
 
-app.controller('EditCtrl', function($scope, $state) {
+app.controller('EditCtrl', function($scope, $state, NoteStore) {
 
-  $scope.note = angular.copy(getNote($state.params.noteId));
-
+  $scope.note = angular.copy(NoteStore.get($state.params.noteId));
 
   $scope.save = function(){
-    updateNote($scope.note);
+    NoteStore.update($scope.note);
     $state.go('list');
   }
 
