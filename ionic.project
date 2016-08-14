@@ -1,9 +1,4 @@
 {
   "name": "MeomeoNotes",
-  "app_id": "",
-  "gulpStartupTasks": [
-    "pug",
-    "sass",
-    "watch"
-  ]
+  "app_id": ""
 }
