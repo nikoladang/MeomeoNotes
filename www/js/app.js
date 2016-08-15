@@ -32,6 +32,10 @@ app.controller('ListCtrl', function($scope, NoteStore) {
   //$scope.notes = notes;
   $scope.notes = NoteStore.list();
 
+  $scope.remove = function(noteID){
+    NoteStore.remove(noteID);
+  };
+
 });
 
 app.controller('AddCtrl', function($scope, $state, NoteStore) {
