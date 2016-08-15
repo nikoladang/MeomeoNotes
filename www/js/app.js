@@ -29,13 +29,21 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 app.controller('ListCtrl', function($scope, NoteStore) {
 
-  //$scope.notes = notes;
+  $scope.reordering = false;
   $scope.notes = NoteStore.list();
 
   $scope.remove = function(noteID){
     NoteStore.remove(noteID);
   };
 
+  $scope.move = function(note, fromIndex, toIndex) {
+    console.log('moving from ' + fromIndex + ' to ' + toIndex);
+    NoteStore.move(note, fromIndex, toIndex);
+  };
+
+  $scope.toogleReordering = function() {
+    $scope.reordering = !$scope.reordering;
+  }
 });
 
 app.controller('AddCtrl', function($scope, $state, NoteStore) {
