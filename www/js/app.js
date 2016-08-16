@@ -50,8 +50,8 @@ app.controller('AddCtrl', function($scope, $state, NoteStore) {
 
   $scope.note = {
     id: new Date().getTime().toString(),
-    title: '1',
-    description: '2'
+    title: '',
+    description: ''
   };
 
   $scope.save = function(){
