@@ -1,7 +1,9 @@
 
 var app = angular.module('meomeonotes', ['ionic', 'meomeonotes.notestore']);
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+
+  $ionicConfigProvider.navBar.alignTitle('center');
 
   $stateProvider.state('list', {
     url: '/list',
